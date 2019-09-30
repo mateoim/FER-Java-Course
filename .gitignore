@@ -25,3 +25,6 @@ hs_err_pid*
 # IntelliJ IEDA
 .idea
 *.iml
+
+# System
+.DS_Store
