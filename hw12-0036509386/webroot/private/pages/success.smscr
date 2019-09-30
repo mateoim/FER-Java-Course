@@ -1,0 +1,15 @@
+{$= "text/html" @setMimeType $}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+    <style>
+        body {background-color: #{$= "bgcolor" "00FF00" @pparamGet $};}
+    </style>
+</head>
+<body>
+    <h1>Color changed successfully!</h1>
+    <a href="index2.html">Go back</a>
+</body>
+</html>

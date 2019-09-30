@@ -1,0 +1,2 @@
+Example { bla } blu \{$=1$}. Nothing interesting {=here}.
+A tag follows {$= "Joe \"Long\" Smith"$}.

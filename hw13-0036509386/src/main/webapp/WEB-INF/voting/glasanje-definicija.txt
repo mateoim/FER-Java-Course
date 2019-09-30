@@ -1,0 +1,7 @@
+1	Pink Floyd	https://www.youtube.com/watch?v=vi7cuAjArRs
+2	Metallica	https://www.youtube.com/watch?v=tAGnKpE4NCI
+3	Rush	https://www.youtube.com/watch?v=auLBLk4ibAk
+4	Scorpions	https://www.youtube.com/watch?v=n4RjJKxsamQ
+5	Dire Straits	https://www.youtube.com/watch?v=jhdFe3evXpk
+6	Led Zeppelin	https://www.youtube.com/watch?v=qHFxncb1gRY
+7	Aerosmith	https://www.youtube.com/watch?v=sZfZ8uWaOFI

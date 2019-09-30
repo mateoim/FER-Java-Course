@@ -1,0 +1,31 @@
+2. Zadatak
+
+Nažalost, moram ti dati 1 jer ti drugi zadatak ne radi kako treba.
+Kod promjene veličine prozora, slika ti se skroz poremeti i pretvori u crte/linije slike.
+Isto ti se događa i kod trećeg zadatka, u onim razredim u kojima koristiš dretve.
+
+Nažalost ovaj zadatak ne zadovoljava minimalne uvjete.
+Kada se prozor razvlači u širini prozor se raspadne uz pogrešno složene trake.
+
+!!! Prozor se raspada na trake kada se dimenzije promjene.
+U minimalnim uvjetima je navedeno da se to ne smije dogoditi,
+stoga ova zadaća ne zadovoljava minimalne uvjete prihvatljivosti.
+
+- zamjenio sam height sa width, sada radi korektno
+
+U metodi NewtonProducer#produce(...) kada zovete #get() nad zadatkom trebate to napraviti kako je profesor opisao na predavanju.
+
+- ispravljeno
+
+Metodu Newton#getInput() bi valjalo razbiti na metodu koja čita input i na metodu koja ga parsira.
+
+- razdvojeno u metodu Newton#parseInput()
+
+3. Zadatak
+
+!!! Isto kao i u 2. zadatku imate raspadanje na trake kod oba paralelna raycastera.
+Također izbija ArrayIndexOutOfBoundsException kod manjih dimenzija ekrana.
+Ovo je još jedan minimalni uvjet prihvatljivosti koji Vaša zadaća ne ispunjava.
+
+- ista greška kao u 2. zadatku, zamijenio height sa width, sada radi
+- situaciju sa ArrayIndexOutOfBoundsException nisam uspio reproducirati, nadam se da sam ju slučajno pokrpao

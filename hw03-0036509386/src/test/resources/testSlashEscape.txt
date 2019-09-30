@@ -1,0 +1,2 @@
+This is a slash: \\
+{$= "This is a slash in string \\ and this is a \"legal\" escape {$ END $}"$}

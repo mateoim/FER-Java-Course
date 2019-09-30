@@ -1,0 +1,60 @@
+pic01.jpg
+Moscow during winter
+Moscow, winter, Russia
+pic02.jpg
+Saint Petersburg
+St Petersburg, summer, Russia
+pic03.jpg
+Stockholm Palace
+Stockholm, Sweden
+pic04.jpg
+Gothenburg at night
+Gothenburg, Sweden, night
+pic05.jpg
+Church of Our Lady before Týn
+church, Prague, Czech Republic
+pic06.jpg
+Prague at night
+night, Prague, Czech Republic
+pic07.jpg
+Musikverein
+Vienna, Austria
+pic08.jpg
+Vienna State Opera
+Vienna, night, Austria
+pic09.jpg
+Austrian Parliament Building
+Vienna, Austria
+pic10.jpg
+Heroes' Square
+Budapest, Hungary, square, night
+pic11.jpg
+Storkyrkan
+church, Stockholm, Sweden
+pic12.jpg
+Saint Petersburg during winter
+St Petersburg, winter, Russia
+pic13.jpg
+Budapest at night
+Budapest, Hungary, night
+pic14.jpg
+Colosseum in Rome
+Rome, Colosseum, Italy
+pic15.jpg
+St. Peter's Square
+square, Rome, Italy
+pic16.jpg
+Petra
+Petra, Jordan
+pic17.jpg
+Dome of the Rock
+Jerusalem, summer
+pic18.jpg
+Church of the Holy Sepulchre
+Jerusalem, church
+pic19.jpg
+Hallgrímskirkja
+church, Iceland, Reykjavík, winter
+pic20.jpg
+Reykjavík
+Reykjavík, Iceland, winter

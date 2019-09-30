@@ -1,0 +1,379 @@
+package hr.fer.zemris.java.custom.collections;
+
+/**
+ * A {@code Collection} that is based on a double linked list.
+ * It can store duplicate values, but cannot store {@code null} values.
+ *
+ * @author Mateo Imbrišak
+ */
+
+public class LinkedListIndexedCollection extends Collection {
+
+    /**
+     * Current size of the {@code LinkedListIndexedCollection}.
+     */
+    private int size;
+
+    /**
+     * A reference to the first element of the {@code LinkedListIndexedCollection}.
+     */
+    private ListNode first;
+
+    /**
+     * A reference to the last element of the {@code LinkedListIndexedCollection}.
+     */
+    private ListNode last;
+
+    /**
+     * An auxiliary class that represents an element of the {@code LinkedListIndexedCollection}.
+     */
+    private static class ListNode {
+        private ListNode previousNode;
+        private ListNode nextNode;
+        private Object value;
+    }
+
+    /**
+     * Default constructor that sets the first and last node to {@code null}.
+     */
+    public LinkedListIndexedCollection() {
+        this(new Collection());
+    }
+
+    /**
+     * Checks the current size of the {@code LinkedListIndexedCollection}.
+     *
+     * @return current size of the {@code LinkedListIndexedCollection}.
+     */
+    @Override
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Adds an element to the end of the {@code LinkedListIndexedCollection}.
+     *
+     * @param value of the element being added.
+     *
+     * @throws NullPointerException if the passed argument is {@code null}.
+     */
+    @Override
+    public void add(Object value) {
+        if (value == null) {
+            throw new NullPointerException("Null cannot be added to the Collection.");
+        }
+
+        if (first == null) {
+            first = new ListNode();
+            first.value = value;
+            last = first;
+            size++;
+            return;
+        }
+
+        ListNode node = new ListNode();
+        node.value = value;
+        node.previousNode = last;
+        last.nextNode = node;
+        last = node;
+        size++;
+    }
+
+    /**
+     * Checks if a given value is contained in this {@code LinkedListIndexedCollection}.
+     *
+     * @param value we are trying to find.
+     *
+     * @return {@code true} if the value is in the {@code LinkedListIndexedCollection},
+     * otherwise {@code false}.
+     */
+    @Override
+    public boolean contains(Object value) {
+        if (first == null) {
+            return false;
+        }
+
+        ListNode node = first;
+
+        do {
+            if (node.value.equals(value)) {
+                return true;
+            }
+            node = node.nextNode;
+        } while (node != null);
+
+        return  false;
+    }
+
+    /**
+     * Removes the given value from the {@code LinkedListIndexedCollection}.
+     *
+     * @param value being removed.
+     *
+     * @return {@code true} if the element has been successfully removed,
+     * otherwise {@code false}.
+     */
+    @Override
+    public boolean remove(Object value) {
+        if (value == null) {
+            return false;
+        }
+
+        if (first.value.equals(value)) {
+            first = first.nextNode;
+            size--;
+            return true;
+        } else if (last.value.equals(value)) {
+            last = last.previousNode;
+            last.nextNode = null;
+            size--;
+            return true;
+        }
+
+        ListNode node = first;
+
+        do {
+            if (node.value.equals(value)) {
+                ListNode previous = node.previousNode;
+                ListNode next = node.nextNode;
+
+                previous.nextNode = node.nextNode;
+                next.previousNode = node.previousNode;
+
+                size--;
+
+                return true;
+            }
+
+            node = node.nextNode;
+        } while (node.nextNode != null);
+
+        return false;
+    }
+
+    /**
+     * Generates an array based on the current contents of
+     * the {@code LinkedListIndexedCollection}.
+     *
+     * @return array of {@code Object}s currently in the {@code LinkedListIndexedCollection}.
+     */
+    @Override
+    public Object[] toArray() {
+        if (first == null) {
+            return new Object[0];
+        }
+
+        Object[] returnArray = new Object[size];
+        ListNode node = first;
+        int counter = 0;
+
+        do {
+            returnArray[counter] = node.value;
+            node = node.nextNode;
+            counter++;
+        } while (node != null);
+
+        return returnArray;
+    }
+
+    /**
+     * Calls the method {@link hr.fer.zemris.java.custom.collections.Processor#process(Object)}
+     * on each element of the {@code LinkedListIndexedCollection}.
+     *
+     * @param processor used to process the elements.
+     */
+    @Override
+    public void forEach(Processor processor) {
+        ListNode node = first;
+
+        do {
+            processor.process(node.value);
+            node = node.nextNode;
+        } while (node != null);
+    }
+
+    /**
+     * Removes the references to the first and last element,
+     * effectively emptying the {@code LinkedListIndexedCollection}.
+     */
+    @Override
+    public void clear() {
+        first = null;
+        last = null;
+        size = 0;
+    }
+
+    /**
+     * Returns the element at a given index.
+     *
+     * @param index at which the element is located.
+     *
+     * @return the {@code Object} at the located index.
+     *
+     * @throws IndexOutOfBoundsException if the index is a negative number
+     * or greater than the current size of the {@code LinkedListIndexedCollection}.
+     */
+    public Object get(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IndexOutOfBoundsException("Index must be between 0 and size - 1.");
+        }
+
+        return getToIndex(index).value;
+    }
+
+    /**
+     * Used internally to get to a given index with (n / 2) + 1 complexity
+     *
+     * @param index desired index.
+     *
+     * @return {@code ListNode} at the given index.
+     */
+    private ListNode getToIndex(int index) {
+        if (index <= size / 2) {
+            ListNode node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.nextNode;
+            }
+
+            return node;
+        }
+
+        ListNode node = last;
+        for (int i = 0; i < size - index - 1; i++) {
+            node = node.previousNode;
+        }
+
+        return node;
+    }
+
+    /**
+     * Inserts given {@code Object} at a given position.
+     *
+     * @param value of the {@code Object} being inserted.
+     * @param position of the {@code Object} being inserted.
+     *
+     * @throws NullPointerException if the given {@code Object} is null.
+     * @throws IndexOutOfBoundsException if the given position is
+     * a negative number or greater than current size + 1.
+     */
+    public void insert(Object value, int position) {
+        if (value == null) {
+            throw new NullPointerException("Null cannot be added to the collection.");
+        }
+
+        if (position < 0 || position > size) {
+            throw new IndexOutOfBoundsException("Position bust be a positive number lesser than" +
+                    "or equal to the current size.");
+        }
+
+        ListNode newNode = new ListNode();
+        newNode.value = value;
+
+        if (position == size) { // if this is the last node
+            last.nextNode = newNode;
+            newNode.previousNode = last;
+            last = last.nextNode;
+            size++;
+            return;
+        }
+
+        ListNode positionNode = getToIndex(position);
+
+        if (positionNode.previousNode == null) { // if this is the first node
+            positionNode.previousNode = newNode;
+            newNode.nextNode = positionNode;
+            first = newNode;
+            size++;
+            return;
+        }
+
+        newNode.previousNode = positionNode.previousNode;
+        positionNode.previousNode.nextNode = newNode;
+        positionNode.previousNode = newNode;
+        newNode.nextNode = positionNode;
+        size++;
+    }
+
+    /**
+     * Finds the first occurrence of a given {@code Object},
+     * if it is not found or the value is {@code null}, return -1
+     *
+     * @param value the {@code Object} we are looking for.
+     *
+     * @return First occurrence of the {@code Object} or -1 if
+     *         it is not found or the parameter is null.
+     */
+    public int indexOf(Object value) {
+        if (value == null) {
+            return -1;
+        }
+
+        int index = 0;
+        ListNode node = first;
+
+        do {
+            if (node.value.equals(value)) {
+                return index;
+            }
+            index++;
+            node = node.nextNode;
+        } while (node != null);
+
+        return -1;
+    }
+
+    /**
+     * Removes the {@code Object} at a given index.
+     *
+     * @param index of the {@code Object} we want to remove.
+     *
+     * @throws IndexOutOfBoundsException if the index is a negative number or greater than the current size - 1.
+     */
+    void remove(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IndexOutOfBoundsException("Index must be a positive number lesser than the current size.");
+        }
+
+        if (index == 0) { // first
+            first = first.nextNode;
+            first.previousNode = null;
+            size--;
+            return;
+        }
+
+        if (index == size - 1) { // last
+            last = last.previousNode;
+            last.nextNode = null;
+            size--;
+            return;
+        }
+
+        ListNode removed = getToIndex(index);
+
+        removed.previousNode.nextNode = removed.nextNode;
+        removed.nextNode.previousNode = removed.previousNode;
+        size--;
+    }
+
+    /**
+     * Constructor that copies all elements from a given {@code Collection}
+     * to the newly created {@code LinkedListIndexedCollection}.
+     *
+     * @param collection that is being copied.
+     *
+     * @throws NullPointerException if the given {@code Collection} is {@code null}.
+     */
+    public LinkedListIndexedCollection(Collection collection) {
+        if (collection == null) {
+            throw new NullPointerException("Collection cannot be null.");
+        }
+
+        if (collection.isEmpty()) {
+            first = null;
+            last = null;
+        } else {
+            addAll(collection);
+            size = collection.size();
+        }
+    }
+}

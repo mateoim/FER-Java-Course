@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Gallery</title>
+
+        <style>
+            #pictureArea {font-style: italic; font-family: cursive; text-align: center}
+            #thumbnailArea {margin-top: 10px; margin-bottom: 10px}
+
+            .image {margin-right: 10px}
+        </style>
+
+        <script type="text/javascript" src="js/htmlescaping.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript"><!--
+
+        function generateColor() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            document.getElementById("title").style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
+        }
+
+        function getTags() {
+            $.ajax(
+                {
+                    url: "rest/picture/tags",
+                    data: {
+                        dummy: Math.random()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var tags = data;
+                        var html = "";
+
+                        if (tags.length === 0) {
+                            html = "No tags found..."
+                        } else {
+                            for (var i = 0; i < tags.length; i++) {
+                                html += "<button onclick='generateThumbnails(\"" + htmlEscape(tags[i]) + "\")'>"
+                                    + htmlEscape(tags[i]) + "</button>";
+                            }
+                        }
+                        $("#buttonArea").html(html);
+                    }
+                }
+            )
+        }
+
+        function generateThumbnails(tag) {
+            $.ajax(
+                {
+                    url: "rest/picture/tags/" + tag,
+                    data: {
+                        dummy: Math.random()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var pictures = data;
+                        var html = "";
+
+                        for (var i = 0; i < pictures.length; i++) {
+                            html += "<img class='image' src='img?path=thumbnails/" + htmlEscape(pictures[i].name)
+                                + "' onclick='enlargeImage(\"" + htmlEscape(pictures[i].name) + "\")'>"
+                        }
+                        $("#thumbnailArea").html(html);
+                    }
+                }
+            )
+        }
+
+        function enlargeImage(name) {
+            $.ajax(
+                {
+                    url: "rest/picture/" + name,
+                    data: {
+                        dummy: Math.random()
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        var picture = data;
+                        var tags = picture.tags;
+                        var html = "<img src='img?path=slike/" + htmlEscape(picture.name) + "'><br>"
+                            + picture.description + "<br>tags: ";
+                        for (var i = 0; i < tags.length; i++) {
+                            html += tags[i] + ", ";
+                        }
+
+                        html = html.substr(0, html.length - 2);
+
+                        $("#pictureArea").html(html);
+                    }
+                }
+            )
+        }
+
+        //--></script>
+    </head>
+    <body onload="getTags()">
+        <h1 id="title" onmouseover="generateColor()">Gallery</h1>
+        Here are all found tags.
+        <div id="buttonArea"></div>
+        <div id="thumbnailArea"></div>
+        <div id="pictureArea"></div>
+    </body>
+</html>
